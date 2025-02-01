@@ -2,12 +2,6 @@ name: Snail Script Test
 
 on:
   workflow_dispatch:
-    inputs:
-      test_message:
-        description: 'Test message to include in the file'
-        required: false
-        default: 'Default test message'
-        type: string
 
 jobs:
   test-snail:
@@ -46,8 +40,6 @@ jobs:
         Line 1: Some sensitive information
         Line 2: More secret data
         Line 3: Confidential notes
-        
-        Custom message: ${{ inputs.test_message }}
         
         Testing encryption and decryption
         With multiple lines
