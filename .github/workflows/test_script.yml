@@ -22,11 +22,22 @@ jobs:
         source ~/.zshrc
       shell: zsh {0}
     
+    - name: Verify SECRETS_PASS
+      run: |
+        if [[ -z "${SECRETS_PASS}" ]]; then
+          echo "Error: SECRETS_PASS is not set"
+          exit 1
+        else
+          echo "SECRETS_PASS is properly set"
+        fi
+      shell: zsh {0}
+    
     - name: Make script executable
       run: chmod +x ./snail.sh
       
     - name: Test snail.sh commands
       run: |
+      
         # Create a test file
         ./snail.sh -c test_file
         
