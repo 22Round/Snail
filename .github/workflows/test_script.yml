@@ -1,0 +1,61 @@
+name: Snail Script Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_message:
+        description: 'Test message to include in the file'
+        required: false
+        default: 'Default test message'
+        type: string
+
+jobs:
+  test-snail:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup environment
+      run: |
+        echo 'export SECRETS_PASS="test-password-123"' >> ~/.zshrc
+        source ~/.zshrc
+      shell: zsh {0}
+    
+    - name: Make script executable
+      run: chmod +x ./snail.sh
+      
+    - name: Test snail.sh commands
+      run: |
+        # Create a test file
+        ./snail.sh -c test_file
+        
+        # Add some test content
+        cat > test_file.txt << EOL
+        This is a test file content
+        Line 1: Some sensitive information
+        Line 2: More secret data
+        Line 3: Confidential notes
+        
+        Custom message: ${{ inputs.test_message }}
+        
+        Testing encryption and decryption
+        With multiple lines
+        And various content
+        EOL
+        
+        # Encrypt the file
+        ./snail.sh -e test_file
+        
+        # Decrypt and display in console
+        ./snail.sh -d test_file
+        
+        # Decrypt and open in editor (headless environment, might skip)
+        # ./snail.sh -d test_file
+        
+        # Test help command
+        ./snail.sh -h
+        
+        # Clean up
+        ./snail.sh -rm
+      shell: zsh {0} 
