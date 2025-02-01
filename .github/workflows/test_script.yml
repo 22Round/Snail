@@ -18,9 +18,8 @@ jobs:
     
     - name: Setup environment
       run: |
-        echo 'export SECRETS_PASS="test-password-123"' >> ~/.zshrc
-        source ~/.zshrc
-      shell: zsh {0}
+        echo "SECRETS_PASS=test-password-123" >> $GITHUB_ENV
+      shell: bash
     
     - name: Verify SECRETS_PASS
       run: |
@@ -30,7 +29,7 @@ jobs:
         else
           echo "SECRETS_PASS is properly set"
         fi
-      shell: zsh {0}
+      shell: bash
     
     - name: Make script executable
       run: chmod +x ./snail.sh
