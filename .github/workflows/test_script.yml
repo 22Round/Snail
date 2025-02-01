@@ -49,6 +49,8 @@ jobs:
         
         # Decrypt and display in console
         ./snail.sh -d test_file
+        echo "Decrypted content:"
+        cat test_file.txt
         
         # Decrypt and open in editor (headless environment, might skip)
         # ./snail.sh -d test_file
